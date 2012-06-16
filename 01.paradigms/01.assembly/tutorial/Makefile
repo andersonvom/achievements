@@ -12,5 +12,5 @@ clean:
 	rm $(FILE).bin $(FILE).o
 
 cleanall:
-	rm *.bin *.o
+	-rm *.bin *.o
 
