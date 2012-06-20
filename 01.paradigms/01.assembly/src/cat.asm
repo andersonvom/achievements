@@ -2,6 +2,10 @@
 ; andersonvom
 ; 2012
 
+section .data:
+	NOTFOUND	db	'File not found',10
+	NOTFOUND_LEN	equ	$-NOTFOUND
+
 section .text
 	global _start
 
@@ -16,14 +20,18 @@ open_next_file:
 	int	80h
 
 	test	eax,	eax
-	jns	file_not_found
-	jmp	exit
+	jns	read_file
+	jmp	file_not_found
 	
 read_file:
 	
 
 file_not_found:
-	
+	mov	eax,	4	; write
+	mov	ebx,	1	; STDOUT
+	mov	ecx,	NOTFOUND
+	mov	edx,	NOTFOUND_LEN
+	int	80h
 
 exit:
 	mov	eax,	1
