@@ -2,9 +2,15 @@
 ; andersonvom
 ; 2012
 
-section .data:
+section .data
+	BUFSIZE		equ	0x2000
 	NOTFOUND	db	'File not found',10
 	NOTFOUND_LEN	equ	$-NOTFOUND
+	ERROR		db	'An error occurred',10
+	ERROR_LEN	equ	$-ERROR
+
+section .bss
+	buffer		resb	BUFSIZE
 
 section .text
 	global _start
@@ -24,13 +30,35 @@ open_next_file:
 	jmp	file_not_found
 	
 read_file:
+	mov	ebx,	eax
+	mov	eax,	3	; sys_read
+	mov	ecx,	buffer
+	mov	edx,	BUFSIZE
+	int	80h
+	test	eax,	eax
+	jz	exit
+	js	error
 	
+	mov	edx,	eax	; num of bytes read
+	mov	eax,	4	; sys_write
+	mov	ebx,	1	; STDOUT
+	int	80h
+
+	jmp	exit
+
+error:
+	mov	ecx,	ERROR
+	mov	edx,	ERROR_LEN
+	jmp	print_message
 
 file_not_found:
-	mov	eax,	4	; write
-	mov	ebx,	1	; STDOUT
 	mov	ecx,	NOTFOUND
 	mov	edx,	NOTFOUND_LEN
+	jmp	print_message
+
+print_message:
+	mov	eax,	4	; write
+	mov	ebx,	1	; STDOUT
 	int	80h
 
 exit:
