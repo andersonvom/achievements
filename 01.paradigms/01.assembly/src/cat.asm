@@ -26,11 +26,10 @@ open_next_file:
 	int	80h
 
 	test	eax,	eax
-	jns	read_file
-	jmp	file_not_found
+	js	file_not_found
+	mov	ebx,	eax
 	
 read_file:
-	mov	ebx,	eax
 	mov	eax,	3	; sys_read
 	mov	ecx,	buffer
 	mov	edx,	BUFSIZE
@@ -39,12 +38,14 @@ read_file:
 	jz	exit
 	js	error
 	
+	push	ebx
 	mov	edx,	eax	; num of bytes read
 	mov	eax,	4	; sys_write
 	mov	ebx,	1	; STDOUT
 	int	80h
+	pop ebx
 
-	jmp	exit
+	jmp	read_file
 
 error:
 	mov	ecx,	ERROR
