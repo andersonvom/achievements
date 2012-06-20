@@ -38,12 +38,12 @@ read_file:
 	jz	exit
 	js	error
 	
-	push	ebx
+	push	ebx		; save file descriptor
 	mov	edx,	eax	; num of bytes read
 	mov	eax,	4	; sys_write
 	mov	ebx,	1	; STDOUT
 	int	80h
-	pop ebx
+	pop ebx			; get file descriptor back
 
 	jmp	read_file
 
