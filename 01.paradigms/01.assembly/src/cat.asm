@@ -1,6 +1,21 @@
-; simple cat implementation
-; andersonvom
-; 2012
+; NAME
+;	cat - concatenate files and print on the standard output
+; 
+; SYNOPSIS
+;	cat.bin [FILE]...
+;
+; EXAMPLES
+;	cat.bin file1
+;		Output contents of file1 to standard output
+;	cat.bin file1 file2
+;		Output contents of file1, then file2 to standard output
+; 
+; License : GNU General Public License
+; Author : Anderson Mesquita
+; E-Mail : andersonvom@gmail.com
+; Version : 0.1
+; Created : 06/20/2012
+
 
 section .data
 	BUFSIZE		equ	0x2000
