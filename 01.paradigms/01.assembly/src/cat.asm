@@ -31,10 +31,15 @@ section .text
 	global _start
 
 _start:
-	pop	ebx		; argc
+	pop	esi		; argc
+	dec	esi		; number of files
 	pop	ebx		; argv[0] - program name
 
-open_next_file:
+next_file:
+	dec	esi		; reading i-th file
+	cmp	esi,	0	; check for more files to read
+	jl	exit		; bail if none
+	
 	pop	ebx		; argv[i] - filename
 	mov	eax,	5	; sys_open
 	mov	ecx,	0	; O_RDONLY
@@ -50,7 +55,7 @@ read_file:
 	mov	edx,	BUFSIZE
 	int	80h
 	test	eax,	eax
-	jz	exit
+	jz	next_file
 	js	error
 	
 	push	ebx		; save file descriptor
