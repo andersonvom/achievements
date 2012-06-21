@@ -16,10 +16,16 @@
 ; Version : 0.1
 ; Created : 06/21/2012
 
+; input and output
 %define	STDIN		0
 %define	STDOUT		1
 %define	STDERR		2
 
+; file options
+%define	O_RDONLY	0
+
+; functions
+%define	sys_exit	1
 %define	sys_open	5
 %define	sys_read	3
 %define	sys_write	4
