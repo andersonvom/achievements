@@ -74,7 +74,7 @@ file_not_found:
 
 print_message:
 	mov	eax,	4	; write
-	mov	ebx,	1	; STDOUT
+	mov	ebx,	2	; STDERR
 	int	80h
 
 exit:
