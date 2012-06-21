@@ -16,6 +16,7 @@
 ; Version : 0.1
 ; Created : 06/20/2012
 
+%include "utils.asm"		; utils.asm provides helper definitions
 
 section .data
 	BUFSIZE		equ	0x2000
@@ -41,8 +42,8 @@ next_file:
 	jl	exit		; bail if none
 	
 	pop	ebx		; argv[i] - filename
-	mov	eax,	5	; sys_open
-	mov	ecx,	0	; O_RDONLY
+	mov	eax,	sys_open
+	mov	ecx,	O_RDONLY
 	int	80h
 
 	test	eax,	eax
@@ -50,7 +51,7 @@ next_file:
 	mov	ebx,	eax
 	
 read_file:
-	mov	eax,	3	; sys_read
+	mov	eax,	sys_read
 	mov	ecx,	buffer
 	mov	edx,	BUFSIZE
 	int	80h
@@ -60,8 +61,8 @@ read_file:
 	
 	push	ebx		; save file descriptor
 	mov	edx,	eax	; num of bytes read
-	mov	eax,	4	; sys_write
-	mov	ebx,	1	; STDOUT
+	mov	eax,	sys_write
+	mov	ebx,	STDOUT
 	int	80h
 	pop ebx			; get file descriptor back
 
@@ -78,12 +79,12 @@ file_not_found:
 	jmp	print_message
 
 print_message:
-	mov	eax,	4	; write
-	mov	ebx,	2	; STDERR
+	mov	eax,	sys_write
+	mov	ebx,	STDERR
 	int	80h
 
 exit:
-	mov	eax,	1
+	mov	eax,	sys_exit
 	mov	ebx,	0
 	int	80h
 
