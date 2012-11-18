@@ -5,7 +5,7 @@ This readme is part of a blog post. Check it out at: http://jasonrudolph.com/blo
 
 ### Learn a variety of [programming paradigms](http://en.wikipedia.org/wiki/Programming_paradigm "Programming paradigm - Wikipedia"):
 
-* [ ] Write a program in assembly language
+* [✔] Write a program in assembly language
 * [ ] Write an application in a functional language
 * [ ] Write an application in an object-oriented language
 * [ ] Write an application in a prototype-based language
